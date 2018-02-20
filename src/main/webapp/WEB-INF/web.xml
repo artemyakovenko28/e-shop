@@ -1,0 +1,195 @@
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                        http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    
+    <!--home page-->
+    <welcome-file-list>
+        <welcome-file>/productAll.do</welcome-file>
+    </welcome-file-list>
+
+    <!--session properties-->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!--context init parameters-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext-dao-extermal-tx.xml</param-value>
+    </context-param>
+
+    <!--CONTROLLERS-->
+    <!--product-->
+    <!--<servlet>-->
+        <!--<servlet-name>ProductController</servlet-name>-->
+        <!--<servlet-class>com.company.eshop.controller.ProductController</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>ProductController</servlet-name>-->
+        <!--<url-pattern>/product.do</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--&lt;!&ndash;product all&ndash;&gt;-->
+    <!--<servlet>-->
+        <!--<servlet-name>ProductAllController</servlet-name>-->
+        <!--<servlet-class>com.company.eshop.controller.ProductAllController</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>ProductAllController</servlet-name>-->
+        <!--<url-pattern>/productAll.do</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!--product external tx-->
+    <servlet>
+        <servlet-name>ProductControllerExternalTx</servlet-name>
+        <servlet-class>com.company.eshop.controller.ProductControllerExternalTx</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductControllerExternalTx</servlet-name>
+        <url-pattern>/product.do</url-pattern>
+    </servlet-mapping>
+
+    <!--product all external tx-->
+    <servlet>
+        <servlet-name>ProductAllControllerExternalTx</servlet-name>
+        <servlet-class>com.company.eshop.controller.ProductAllControllerExternalTx</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductAllControllerExternalTx</servlet-name>
+        <url-pattern>/productAll.do</url-pattern>
+    </servlet-mapping>
+
+    <!--HelloWorld-->
+    <servlet>
+        <servlet-name>MockController</servlet-name>
+        <servlet-class>com.company.eshop.controller.demo.MockController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MockController</servlet-name>
+        <url-pattern>/mock.do</url-pattern>
+    </servlet-mapping>
+
+    <!--Attributes demo-->
+    <servlet>
+        <servlet-name>MVCMockController</servlet-name>
+        <servlet-class>com.company.eshop.controller.demo.MVCMockController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MVCMockController</servlet-name>
+        <url-pattern>/mvcMockController.do</url-pattern>
+    </servlet-mapping>
+
+    <!--session demo-->
+    <servlet>
+        <servlet-name>SessionMockController</servlet-name>
+        <servlet-class>com.company.eshop.controller.demo.SessionMockController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SessionMockController</servlet-name>
+        <url-pattern>/sessionMock.do</url-pattern>
+    </servlet-mapping>
+
+    <!--cookie demo-->
+    <servlet>
+        <servlet-name>CookieMockController</servlet-name>
+        <servlet-class>com.company.eshop.controller.demo.CookieMockController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CookieMockController</servlet-name>
+        <url-pattern>/cookieMock.do</url-pattern>
+    </servlet-mapping>
+
+
+    <!--add to bucket-->
+    <servlet>
+        <servlet-name>ProductAddToBucketController</servlet-name>
+        <servlet-class>com.company.eshop.controller.ProductAddToBucketController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductAddToBucketController</servlet-name>
+        <url-pattern>/productAddToBucket.do</url-pattern>
+    </servlet-mapping>
+
+    <!--remove from bucket-->
+    <servlet>
+        <servlet-name>ProductRemoveFromBucketController</servlet-name>
+        <servlet-class>com.company.eshop.controller.ProductRemoveFromBucketController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductRemoveFromBucketController</servlet-name>
+        <url-pattern>/productRemoveFromBucket.do</url-pattern>
+    </servlet-mapping>
+    <!--FILTERS-->
+    <!--processing time-->
+    <filter>
+        <filter-name>TimeFilter</filter-name>
+        <filter-class>com.company.eshop.filter.ProcessingTimeFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>TimeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--request info-->
+    <filter>
+        <filter-name>InfoFilter</filter-name>
+        <filter-class>com.company.eshop.filter.RequestInfoFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>InfoFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AttributesToSessionFilter</filter-name>
+        <filter-class>com.company.eshop.filter.AddAtributesToSessionFilter</filter-class>
+        <init-param>
+            <param-name>filter-param-name-A</param-name>
+            <param-value>filter-param-value-A</param-value>
+        </init-param>
+        <init-param>
+            <param-name>filter-param-name-B</param-name>
+            <param-value>filter-param-value-B</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AttributesToSessionFilter</filter-name>
+        <servlet-name>MockController</servlet-name>
+    </filter-mapping>
+
+    <!--Listeners-->
+    <listener>
+        <listener-class>com.company.eshop.listener.MyHttpSessionActivationListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyHttpSessionAttributeListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyHttpSessionBindingListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyHttpSessionListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyServletContextAttributeListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyServletContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyServletRequestAtributeListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.company.eshop.listener.MyServletRequestListener</listener-class>
+    </listener>
+</web-app>
